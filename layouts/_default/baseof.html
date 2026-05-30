@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="{{ .Language.Lang }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  <meta property="og:title" content="{{ .Title }}">
+  <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1a18" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+  <link rel="canonical" href="{{ .Permalink }}">
+  {{ range .AlternativeOutputFormats }}
+  <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}">
+  {{ end }}
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="{{ "/" | relLangURL }}" class="site-logo">
+      உண்மை <span class="logo-ta">Unmai</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      {{ range .Site.Menus.main }}
+      <a href="{{ .URL | relLangURL }}" {{ if $.IsMenuCurrent "main" . }}class="active"{{ end }}>
+        {{ .Name }}
+      </a>
+      {{ end }}
+    </nav>
+    <div class="lang-toggle" aria-label="Language switcher">
+      {{ range .Site.Languages }}
+      <a href="{{ $.RelPermalink }}" hreflang="{{ .Lang }}"
+        {{ if eq .Lang $.Site.Language.Lang }}class="active"{{ end }}>
+        {{ .LanguageName }}
+      </a>
+      {{ end }}
+    </div>
+  </div>
+</header>
+
+<main class="page-main" id="main-content">
+  {{ block "main" . }}{{ end }}
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p class="footer-note">
+      உண்மை (Unmai) is a non-partisan fact reference for Tamil Nadu politics.
+      Every claim is sourced. No opinion without evidence. Last updated: {{ now.Format "2 Jan 2006" }}.
+    </p>
+    <p>
+      <a href="{{ .Site.Params.github }}" target="_blank" rel="noopener">View source on GitHub</a>
+      &nbsp;·&nbsp;
+      <a href="{{ "/about/" | relLangURL }}">About</a>
+    </p>
+  </div>
+</footer>
+
+<script src="{{ "js/main.js" | relURL }}"></script>
+</body>
+</html>

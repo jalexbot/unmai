@@ -1,0 +1,138 @@
+backend:
+  name: github
+  repo: jalexbot/unmai-tn
+  branch: main
+
+media_folder: static/images
+public_folder: /images
+locale: en
+
+collections:
+  - name: said-vs-did
+    label: Said vs Did
+    label_singular: Entry
+    folder: content/en/said-vs-did
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime }
+      - label: Party
+        name: party
+        widget: select
+        options: [DMK, TVK, AIADMK, BJP, Congress, Other]
+      - label: Verdict
+        name: verdict
+        widget: select
+        options: [Delivered, Partial, Broken, Pending, In Progress]
+      - { label: "What was said (exact quote)", name: said, widget: text }
+      - { label: Said by, name: said_by, widget: string }
+      - { label: Said date, name: said_date, widget: string }
+      - { label: "What was done", name: did, widget: text }
+      - { label: "Done/status date", name: did_date, widget: string }
+      - { label: Tags, name: tags, widget: list, required: false }
+      - { label: "Evidence summary", name: evidence_summary, widget: text }
+      - label: Sources
+        name: sources
+        widget: list
+        required: false
+        fields:
+          - { label: Label, name: label, widget: string }
+          - { label: URL, name: url, widget: string, required: false }
+          - { label: Date, name: date, widget: string, required: false }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: myth-vs-fact
+    label: Myth vs Fact
+    label_singular: Claim
+    folder: content/en/myth-vs-fact
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime }
+      - label: Party (source of claim)
+        name: party
+        widget: select
+        options: [DMK, TVK, AIADMK, BJP, Congress, Multiple, Unknown]
+        required: false
+      - label: Verdict
+        name: verdict
+        widget: select
+        options: [Fact, Myth, Partially True, Disputed, Misleading]
+      - { label: "Claim being checked", name: claim, widget: text }
+      - { label: "Claim source", name: claim_source, widget: string }
+      - { label: Tags, name: tags, widget: list, required: false }
+      - { label: "Evidence summary", name: evidence_summary, widget: text }
+      - label: Sources
+        name: sources
+        widget: list
+        required: false
+        fields:
+          - { label: Label, name: label, widget: string }
+          - { label: URL, name: url, widget: string, required: false }
+          - { label: Date, name: date, widget: string, required: false }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: promise-tracker
+    label: Promise Tracker
+    label_singular: Promise
+    folder: content/en/promise-tracker
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime }
+      - label: Party
+        name: party
+        widget: select
+        options: [DMK, TVK, AIADMK, BJP, Congress]
+      - label: Verdict
+        name: verdict
+        widget: select
+        options: [Delivered, Partial, Broken, Pending, In Progress, Not Started]
+      - { label: "Promise (exact quote)", name: said, widget: text }
+      - { label: Said by, name: said_by, widget: string }
+      - { label: Said date, name: said_date, widget: string }
+      - { label: "Action taken", name: did, widget: text }
+      - { label: "Status date", name: did_date, widget: string }
+      - { label: Tags, name: tags, widget: list, required: false }
+      - { label: "Evidence summary", name: evidence_summary, widget: text }
+      - label: Sources
+        name: sources
+        widget: list
+        required: false
+        fields:
+          - { label: Label, name: label, widget: string }
+          - { label: URL, name: url, widget: string, required: false }
+          - { label: Date, name: date, widget: string, required: false }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: scheme-hub
+    label: Scheme Hub
+    label_singular: Scheme
+    folder: content/en/scheme-hub
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime }
+      - label: Status
+        name: verdict
+        widget: select
+        options: [Active, Modified, Discontinued, New, Renamed]
+      - label: Party that launched
+        name: party
+        widget: select
+        options: [DMK, AIADMK, BJP, Central Govt, Multiple]
+      - { label: Tags, name: tags, widget: list, required: false }
+      - { label: "Evidence summary", name: evidence_summary, widget: text }
+      - label: Sources
+        name: sources
+        widget: list
+        required: false
+        fields:
+          - { label: Label, name: label, widget: string }
+          - { label: URL, name: url, widget: string, required: false }
+          - { label: Date, name: date, widget: string, required: false }
+      - { label: Body, name: body, widget: markdown }

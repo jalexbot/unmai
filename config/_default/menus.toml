@@ -1,0 +1,43 @@
+[en]
+  [[en.main]]
+    name = "Said vs Did"
+    url = "/said-vs-did/"
+    weight = 1
+  [[en.main]]
+    name = "Promises"
+    url = "/promise-tracker/"
+    weight = 2
+  [[en.main]]
+    name = "Myth vs Fact"
+    url = "/myth-vs-fact/"
+    weight = 3
+  [[en.main]]
+    name = "Schemes"
+    url = "/scheme-hub/"
+    weight = 4
+  [[en.main]]
+    name = "Data"
+    url = "/data-stats/"
+    weight = 5
+
+[ta]
+  [[ta.main]]
+    name = "சொன்னது vs செய்தது"
+    url = "/said-vs-did/"
+    weight = 1
+  [[ta.main]]
+    name = "வாக்குறுதிகள்"
+    url = "/promise-tracker/"
+    weight = 2
+  [[ta.main]]
+    name = "மிதமான vs உண்மை"
+    url = "/myth-vs-fact/"
+    weight = 3
+  [[ta.main]]
+    name = "திட்டங்கள்"
+    url = "/scheme-hub/"
+    weight = 4
+  [[ta.main]]
+    name = "தரவு"
+    url = "/data-stats/"
+    weight = 5

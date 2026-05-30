@@ -1,0 +1,65 @@
+{{ define "main" }}
+<div class="page-header">
+  <h1 class="page-header-title">{{ .Title }}</h1>
+  {{ with .Description }}<p class="page-header-desc">{{ . }}</p>{{ end }}
+</div>
+
+{{ $parties := slice "All" "DMK" "TVK" "AIADMK" "BJP" }}
+<div class="filter-row" id="party-filters">
+  {{ range $parties }}
+  <button class="filter-btn{{ if eq . "All" }} active{{ end }}" data-filter="{{ lower . }}">{{ . }}</button>
+  {{ end }}
+</div>
+
+<input type="text" class="search-bar" id="search-input" placeholder="Search entries..." aria-label="Search">
+
+<div class="entry-list" id="entry-list">
+  {{ range .Pages }}
+  <a href="{{ .RelPermalink }}" class="entry-card"
+     data-party="{{ lower (default "all" .Params.party) }}"
+     data-title="{{ lower .Title }}"
+     style="display:block;">
+    <div class="entry-meta">
+      {{ with .Params.party }}<span class="badge badge-{{ lower . }}">{{ . }}</span>{{ end }}
+      {{ with .Params.verdict }}<span class="badge badge-{{ lower (replace . " " "-") }}">{{ . }}</span>{{ end }}
+      {{ with .Params.tags }}{{ range first 2 . }}<span class="badge" style="background:var(--color-bg-tertiary);color:var(--color-text-secondary);">{{ . }}</span>{{ end }}{{ end }}
+      <span style="font-size:11px; color:var(--color-text-muted); margin-left:auto;">{{ .Date.Format "2 Jan 2006" }}</span>
+    </div>
+    <div class="entry-title">{{ .Title }}</div>
+    <div class="entry-summary">{{ .Summary | truncate 200 }}</div>
+    {{ with .Params.source_label }}
+    <div class="entry-source">Source: <a href="{{ $.Params.source_url }}" target="_blank" rel="noopener">{{ . }}</a></div>
+    {{ end }}
+  </a>
+  {{ end }}
+</div>
+
+<script>
+(function() {
+  const filters = document.querySelectorAll('.filter-btn');
+  const entries = document.querySelectorAll('.entry-card');
+  const search = document.getElementById('search-input');
+  let activeFilter = 'all';
+
+  function applyFilters() {
+    const q = search.value.toLowerCase();
+    entries.forEach(function(el) {
+      const partyMatch = activeFilter === 'all' || el.dataset.party === activeFilter;
+      const textMatch = !q || el.dataset.title.includes(q) || el.innerText.toLowerCase().includes(q);
+      el.style.display = (partyMatch && textMatch) ? 'block' : 'none';
+    });
+  }
+
+  filters.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      filters.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      applyFilters();
+    });
+  });
+
+  search.addEventListener('input', applyFilters);
+})();
+</script>
+{{ end }}

@@ -1,0 +1,78 @@
+{{ define "main" }}
+<article>
+  <div style="margin-bottom:1.5rem;">
+    <a href="{{ .CurrentSection.RelPermalink }}" style="font-size:13px; color:var(--color-text-muted);">
+      ← {{ .CurrentSection.Title }}
+    </a>
+  </div>
+
+  <div class="entry-meta" style="margin-bottom:1rem;">
+    {{ with .Params.party }}<span class="badge badge-{{ lower . }}">{{ . }}</span>{{ end }}
+    {{ with .Params.verdict }}<span class="badge badge-{{ lower (replace . " " "-") }}">{{ . }}</span>{{ end }}
+    {{ with .Params.tags }}{{ range . }}<span class="badge" style="background:var(--color-bg-tertiary);color:var(--color-text-secondary);">{{ . }}</span>{{ end }}{{ end }}
+    <span style="font-size:12px; color:var(--color-text-muted); margin-left:auto;">{{ .Date.Format "2 January 2006" }}</span>
+  </div>
+
+  <h1 style="font-size:22px; font-weight:600; letter-spacing:-0.02em; line-height:1.3; margin-bottom:1rem;">{{ .Title }}</h1>
+
+  {{ if and .Params.said .Params.did }}
+  <div class="svd-grid" style="margin-bottom:1.5rem;">
+    <div class="svd-said">
+      <div class="svd-label">What was said</div>
+      <div class="svd-quote">"{{ .Params.said }}"</div>
+      {{ with .Params.said_by }}<div style="font-size:12px; color:var(--color-text-muted); margin-top:6px;">— {{ . }}</div>{{ end }}
+      {{ with .Params.said_date }}<div style="font-size:11px; color:var(--color-text-muted);">{{ . }}</div>{{ end }}
+    </div>
+    <div class="svd-did">
+      <div class="svd-label">What was done</div>
+      <div class="svd-action">{{ .Params.did }}</div>
+      {{ with .Params.did_date }}<div style="font-size:12px; color:var(--color-text-muted); margin-top:6px;">As of {{ . }}</div>{{ end }}
+    </div>
+  </div>
+  {{ end }}
+
+  {{ if .Params.claim }}
+  <div style="background:var(--color-bg-secondary); border-radius:var(--radius-md); padding:1rem 1.25rem; margin-bottom:1.5rem; border-left:3px solid var(--color-border-strong);">
+    <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--color-text-muted); margin-bottom:6px;">Claim being checked</div>
+    <div style="font-size:15px; font-style:italic; line-height:1.6;">{{ .Params.claim }}</div>
+    {{ with .Params.claim_source }}<div style="font-size:12px; color:var(--color-text-muted); margin-top:6px;">Source: {{ . }}</div>{{ end }}
+  </div>
+  {{ end }}
+
+  <div style="font-size:15px; line-height:1.8; color:var(--color-text);">
+    {{ .Content }}
+  </div>
+
+  {{ with .Params.evidence_summary }}
+  <div style="margin-top:2rem; padding:1.25rem; background:var(--color-bg-secondary); border-radius:var(--radius-md);">
+    <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--color-text-muted); margin-bottom:8px;">Evidence summary</div>
+    <div style="font-size:14px; line-height:1.7;">{{ . }}</div>
+  </div>
+  {{ end }}
+
+  {{ with .Params.sources }}
+  <div style="margin-top:1.5rem; border-top:0.5px solid var(--color-border); padding-top:1.25rem;">
+    <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--color-text-muted); margin-bottom:8px;">Sources</div>
+    <ol style="padding-left:1.2rem;">
+      {{ range . }}
+      <li style="font-size:13px; color:var(--color-text-secondary); margin-bottom:4px; line-height:1.5;">
+        {{ with .url }}<a href="{{ . }}" target="_blank" rel="noopener" style="color:var(--color-pending);">{{ end }}
+        {{ .label }}
+        {{ with .url }}</a>{{ end }}
+        {{ with .date }} · <span style="color:var(--color-text-muted);">{{ . }}</span>{{ end }}
+      </li>
+      {{ end }}
+    </ol>
+  </div>
+  {{ end }}
+
+  <div style="margin-top:2rem; padding-top:1rem; border-top:0.5px solid var(--color-border); font-size:12px; color:var(--color-text-muted);">
+    Last updated: {{ .Lastmod.Format "2 January 2006" }}
+    {{ with .Params.added_by }} · Added by {{ . }}{{ end }}
+    &nbsp;·&nbsp;
+    <a href="{{ .Site.Params.github }}/blob/main/content/{{ .File.Path }}" target="_blank" rel="noopener">
+      View/edit on GitHub
+    </a>
+  </div>
+</article>
+{{ end }}

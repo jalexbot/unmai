@@ -1,0 +1,82 @@
+{{ define "main" }}
+<section class="hero">
+  <h1 class="hero-title">உண்மை — Unmai</h1>
+  <p class="hero-tagline">{{ .Site.Language.Params.tagline }}</p>
+  <p style="font-size:14px; color:var(--color-text-secondary); max-width:560px; line-height:1.7;">
+    A non-partisan fact reference for Tamil Nadu politics. Every claim is verified and sourced.
+    No spin. No opinion without evidence. Built to counter misinformation from all parties.
+  </p>
+  <div class="hero-stats" style="margin-top:1.5rem;">
+    {{ $svd := (where .Site.RegularPages "Section" "said-vs-did") }}
+    {{ $mvf := (where .Site.RegularPages "Section" "myth-vs-fact") }}
+    {{ $pt  := (where .Site.RegularPages "Section" "promise-tracker") }}
+    <div>
+      <div class="hero-stat-val">{{ len $svd }}</div>
+      <div class="hero-stat-label">Said vs Did entries</div>
+    </div>
+    <div>
+      <div class="hero-stat-val">{{ len $mvf }}</div>
+      <div class="hero-stat-label">Claims fact-checked</div>
+    </div>
+    <div>
+      <div class="hero-stat-val">{{ len $pt }}</div>
+      <div class="hero-stat-label">Promises tracked</div>
+    </div>
+    <div>
+      <div class="hero-stat-val">{{ now.Format "Jan 2006" }}</div>
+      <div class="hero-stat-label">Last updated</div>
+    </div>
+  </div>
+</section>
+
+<div class="module-grid">
+  <a href="{{ "/said-vs-did/" | relLangURL }}" class="module-card">
+    <div class="module-card-icon">⚖️</div>
+    <div class="module-card-title">Said vs Did</div>
+    <div class="module-card-desc">What leaders promised vs what actually happened. All parties. Sourced quotes and verified actions.</div>
+    <div class="module-card-count">{{ len $svd }} entries</div>
+  </a>
+  <a href="{{ "/promise-tracker/" | relLangURL }}" class="module-card">
+    <div class="module-card-icon">📋</div>
+    <div class="module-card-title">Promise Tracker</div>
+    <div class="module-card-desc">DMK 2021 manifesto commitments tracked against delivery. TVK promises logged as made.</div>
+    <div class="module-card-count">{{ len $pt }} promises</div>
+  </a>
+  <a href="{{ "/myth-vs-fact/" | relLangURL }}" class="module-card">
+    <div class="module-card-icon">🔍</div>
+    <div class="module-card-title">Myth vs Fact</div>
+    <div class="module-card-desc">Viral claims, WhatsApp forwards, and speech distortions checked against data and primary sources.</div>
+    <div class="module-card-count">{{ len $mvf }} claims checked</div>
+  </a>
+  <a href="{{ "/scheme-hub/" | relLangURL }}" class="module-card">
+    <div class="module-card-icon">🏛️</div>
+    <div class="module-card-title">Scheme Hub</div>
+    <div class="module-card-desc">Government welfare schemes — what existed before, what changed, actual beneficiary data.</div>
+  </a>
+  <a href="{{ "/data-stats/" | relLangURL }}" class="module-card">
+    <div class="module-card-icon">📊</div>
+    <div class="module-card-title">Data & Stats</div>
+    <div class="module-card-desc">Tamil Nadu's real numbers — employment, welfare, infrastructure, health. Official + independent data.</div>
+  </a>
+</div>
+
+{{ $recent := first 5 (where .Site.RegularPages "Section" "in" (slice "said-vs-did" "myth-vs-fact" "promise-tracker")) }}
+{{ if $recent }}
+<section style="margin-top:3rem;">
+  <h2 style="font-size:16px; font-weight:500; margin-bottom:1rem; color:var(--color-text-secondary);">Recently added</h2>
+  <div class="entry-list">
+    {{ range $recent }}
+    <a href="{{ .RelPermalink }}" class="entry-card" style="display:block;">
+      <div class="entry-meta">
+        {{ with .Params.party }}<span class="badge badge-{{ lower . }}">{{ . }}</span>{{ end }}
+        {{ with .Params.verdict }}<span class="badge badge-{{ lower (replace . " " "-") }}">{{ . }}</span>{{ end }}
+        <span style="font-size:11px; color:var(--color-text-muted); margin-left:auto;">{{ .Date.Format "2 Jan 2006" }}</span>
+      </div>
+      <div class="entry-title">{{ .Title }}</div>
+      <div class="entry-summary">{{ .Summary | truncate 160 }}</div>
+    </a>
+    {{ end }}
+  </div>
+</section>
+{{ end }}
+{{ end }}

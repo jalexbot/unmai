@@ -1,0 +1,37 @@
+baseURL = "https://jalexbot.github.io/unmai-tn/"
+title = "உண்மை | Unmai"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
+enableRobotsTXT = true
+enableGitInfo = true
+
+[languages]
+  [languages.en]
+    contentDir = "content/en"
+    languageName = "English"
+    languageCode = "en"
+    weight = 1
+    [languages.en.params]
+      tagline = "Tamil Nadu Politics — Facts, Not Spin"
+  [languages.ta]
+    contentDir = "content/ta"
+    languageName = "தமிழ்"
+    languageCode = "ta"
+    weight = 2
+    [languages.ta.params]
+      tagline = "தமிழ்நாடு அரசியல் — உண்மை மட்டுமே"
+
+[params]
+  description = "A non-partisan, sourced fact reference for Tamil Nadu politics. Every claim verified. Every source linked."
+  github = "https://github.com/jalexbot/unmai-tn"
+  modules = ["said-vs-did", "promise-tracker", "myth-vs-fact", "scheme-hub", "data-stats"]
+
+[taxonomies]
+  party = "parties"
+  tag = "tags"
+  verdict = "verdicts"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
